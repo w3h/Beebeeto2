@@ -1,0 +1,3 @@
+[submodule "Beebeeto-framework"]
+	path = Beebeeto-framework
+	url = git://github.com/ff0000team/Beebeeto-framework.git
