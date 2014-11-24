@@ -7,12 +7,12 @@
 
 import sys
 import traceback
-import update
+import logging
 
 from pprint import pprint
 from optparse import OptionParser, OptionGroup
 from beeplugins import BeePlugins
-
+from utils import logset
 
 BEEBEETO_STATEMENT = \
     "This POC is created for security research. "\
@@ -122,12 +122,16 @@ class BeeBee(object):
         options['target'] = self.__normalize_target(options['target'])
         args = {
             'options': options,
-            'success': None,
+            'success': False,
             'poc_ret': {},
         }
 
         bp = BeePlugins()
-        bp.add_plugin(None,  options['name'])
+        nameinfo =  options['name']
+        if  ".py" in nameinfo:
+            bp.add_plugin(nameinfo[:nameinfo.rfind(".")])
+        else:
+            bp.add_plugin(None, nameinfo)
 
         for plugin in bp.get_plugin_list():
             result = {}
@@ -151,7 +155,9 @@ class BeeBee(object):
                 pprint(result)
             else: 
                 print(" [+] %-50s %s" % (plugin.__module__, result['success']))
-
+            
+            # write log
+            logging.info(result)
 
 if __name__ == '__main__':
     from pprint import pprint

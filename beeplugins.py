@@ -58,7 +58,7 @@ class BeePlugins:
 
     def create_instances(self, exp_name=None, app_name=None):
         if exp_name:
-            z = [i for i in self._all_plugins if (i == exp_name)]
+            z = [i for i in self._all_plugins if (i[i.rfind("/")+1:] == exp_name)]
             if z: 
                 plugin_instance = self.get_plugin_inst(z[0])
                 self.create_instances_appname(plugin_instance, app_name)
