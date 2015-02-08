@@ -73,13 +73,18 @@ def getPoc(poc):
         return ''
     if '<img src="/static/img/test.jpg"' in info:
         return ''
+    if "立即查看" in info:
+        return ''
 
-    bt = BeautifulSoup(info)
-    ret = bt.find('pre', {'class' : "brush: python;"})
-    ret = ret.renderContents()
-    if ret: 
-        return strip_tags(ret)
-    else:
+    try:
+        bt = BeautifulSoup(info)
+        ret = bt.find('pre', {'class' : "brush: python;"})
+        ret = ret.renderContents()
+        if ret: 
+            return strip_tags(ret)
+        else:
+            return ''
+    except:
         return ''
 
 
