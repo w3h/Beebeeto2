@@ -12,7 +12,9 @@ import logging
 from pprint import pprint
 from optparse import OptionParser, OptionGroup
 from beeplugins import BeePlugins
-from utils import logset
+from util import logset
+
+
 
 BEEBEETO_STATEMENT = \
     "This POC is created for security research. "\
@@ -135,6 +137,9 @@ class BeeBee(object):
 
         for plugin in bp.get_plugin_list():
             result = {}
+            args['success'] = False
+            args['poc_ret'] = {}
+
             try:
                 if options['verify']:
                     fun = getattr(plugin, 'verify')

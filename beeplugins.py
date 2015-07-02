@@ -6,8 +6,8 @@
 # Team: W_HHH
 
 import sys,os
-from utils.get_file_list import get_file_list,findfiles
-from utils.factory import moduleFactory
+from util.get_file_list import get_file_list,findfiles
+from util.factory import moduleFactory
 
 class BeePlugins:
     def __init__(self, debug = False):

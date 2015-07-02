@@ -5,7 +5,7 @@ import urllib2
 import os
 import sys
 import socket
-from utils.BeautifulSoup import BeautifulSoup
+from util.BeautifulSoup import BeautifulSoup
 import re
 import time
 import platform
@@ -87,10 +87,13 @@ def getPoc(poc):
     except:
         return ''
 
-
 def makeReadme(name, info):
     ret = re.findall("'name'.*", info)
     if ret == '':
+        print info,name
+        return
+    if len(ret) == 0:
+        print info,name
         return
 
     info = ret[0].replace("'name'", "")
@@ -99,12 +102,12 @@ def makeReadme(name, info):
     info = info.replace(",", "")
     info = info.strip()
     
-    if not os.path.exists("./Beebeeto-framework/demo/readme.html"):
-        with open("./Beebeeto-framework/demo/readme.html", 'w') as fp: 
+    if not os.path.exists("./poc/readme.html"):
+        with open("./poc/readme.html", 'w') as fp: 
             fp.write(g_readme_head)          
 
     info = "[<a href=%s>%s<a>]%s\r\n<br>" % ("http://beebeeto.com/pdb/"+name, name, info)
-    with open("./Beebeeto-framework/demo/readme.html", 'a') as fp: fp.write(info)
+    with open("./poc/readme.html", 'a') as fp: fp.write(info)
 
 
 def savePoc(name, info):
@@ -112,7 +115,7 @@ def savePoc(name, info):
         return
 
     name = name.replace("-", "_")
-    sname = "./Beebeeto-framework/demo/" + name + ".py"
+    sname = "./poc/" + name + ".py"
     if os.path.exists(sname):
         return
 
@@ -145,7 +148,7 @@ def get_onepage_poclist(page):
             one = one.replace('">', "")
             one = one.strip()
             retlist.append(one)
-            
+      
     return retlist
 
 
@@ -158,8 +161,8 @@ def main():
         return
 
     readme = ""
-    if os.path.exists("./Beebeeto-framework/demo/readme.html"):
-        with open("./Beebeeto-framework/demo/readme.html", 'r') as fp: readme = fp.read()
+    if os.path.exists("./poc/readme.html"):
+        with open("./poc/readme.html", 'r') as fp: readme = fp.read()
 
     for i in range(1,1000):
         pocs = get_onepage_poclist(i)
